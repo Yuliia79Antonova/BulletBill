@@ -38,6 +38,7 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 
+	sf::RectangleShape m_wall; //box for the wall
 };
 
 #endif // !GAME_HPP
