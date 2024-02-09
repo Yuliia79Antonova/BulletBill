@@ -30,6 +30,7 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
+	void moveTarget();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -41,6 +42,7 @@ private:
 	sf::RectangleShape m_wall; //box for the wall
 	sf::RectangleShape m_target;//boxfor target to fire at
 	sf::Vector2f m_targetLocation; //location of target
+	sf::Vector2f m_targetVelocity{0.6f, 0.0f};// velocity of the target
 };
 
 #endif // !GAME_HPP
