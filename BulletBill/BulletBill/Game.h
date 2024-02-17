@@ -39,10 +39,22 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 
+	bool m_graphics{ false }; //draw fancy pictures [or not]
+
 	sf::RectangleShape m_wall; //box for the wall
 	sf::RectangleShape m_target;//boxfor target to fire at
 	sf::Vector2f m_targetLocation; //location of target
 	sf::Vector2f m_targetVelocity{0.6f, 0.0f};// velocity of the target
+
+
+	sf::Texture m_wallTexture;
+	sf::Sprite m_wallSprite;
+	sf::Texture m_backgroundTexture;
+	sf::Sprite m_gumbaTexture;
+	sf::Sprite m_gumbaSprite;
+	sf::Sprite m_backgroundSprite;
+
+
 };
 
 #endif // !GAME_HPP
