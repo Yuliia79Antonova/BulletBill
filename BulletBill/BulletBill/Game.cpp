@@ -119,6 +119,10 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	if (m_firing)
+	{
+		moveBall();
+	}
 	moveTarget();
 	animateTarget();
 }
@@ -179,7 +183,7 @@ void Game::setupSprite()
 	m_ball.setFillColor(sf::Color::Red);
 	m_ball.setRadius(10.0f);
 	m_ball.setOrigin(10.0f, 10.0f);
-	
+	m_ballLocation = sf::Vector2f{ 100.0f, 550.0f };
 	m_ball.setPosition(100.0f, 550.0f);
 
 
@@ -329,6 +333,27 @@ void Game::processMouseMove(sf::Event t_event)
 
 void Game::processMouseUp(sf::Event t_event)
 {
-	m_aiming = false;
-	m_aimLine.clear();
+	if (m_aiming && !m_firing)
+	{
+
+		m_aiming = false;
+		m_firing = true;
+		m_mouseEnd.x = static_cast<float>(t_event.mouseButton.x);
+		m_mouseEnd.y = static_cast<float>(t_event.mouseButton.y);
+		m_ballVelocity = m_mouseEnd - m_canonEnd;
+		m_ballVelocity = m_ballVelocity / 50.0f;
+		m_aimLine.clear();
+	}
 }
+
+void Game::moveBall()
+{
+	m_ballLocation += m_ballVelocity;
+	m_ball.setPosition(m_ballLocation);
+
+}
+
+	
+	
+
+	

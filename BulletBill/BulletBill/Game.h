@@ -36,6 +36,8 @@ private:
 	void moveTarget();
 	void animateTarget();
 	void setAimLine();
+	void moveBall();
+
 
 
 	sf::RenderWindow m_window; // main SFML window
@@ -72,6 +74,7 @@ private:
 
 	sf::VertexArray m_aimLine{ sf::Lines }; //line to show path
 	bool m_aiming{ false }; // are we aiming
+	bool m_firing{ false };//we are firing
 
 
 	int m_gumbaFrame{ -1 };
