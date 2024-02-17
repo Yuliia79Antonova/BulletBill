@@ -138,6 +138,7 @@ void Game::render()
 	else
 	{
 		m_window.draw(m_canon);
+		m_window.draw(m_ball);
 		m_window.draw(m_wall);
 		if (m_aiming)
 		{
@@ -175,10 +176,17 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
+	m_ball.setFillColor(sf::Color::Red);
+	m_ball.setRadius(10.0f);
+	m_ball.setOrigin(10.0f, 10.0f);
+	
+	m_ball.setPosition(100.0f, 550.0f);
+
+
 	m_canon.setFillColor(sf::Color::Black);
 	m_canon.setSize(sf::Vector2f{ 20.0f, 70.0f });
 	m_canon.setPosition(100.0f, 550.0f);
-	m_canon.setOrigin(0.0f, 35.0f);
+	m_canon.setOrigin(10.0f, 35.0f);
 	m_canon.setRotation(45.0f);
 	if (m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
 	{
@@ -295,7 +303,7 @@ void Game::setAimLine()
 	float angelR; //radians
 	sf::Vector2f line;
 
-	line = m_mouseEnd = m_canonEnd;
+	line = m_mouseEnd - m_canonEnd;
 	angelR = std::atan2f(line.y, line.x);
 	angelD = angelR * 180.0f / 3.14f;
 	m_canon.setRotation(angelD +90.0f);

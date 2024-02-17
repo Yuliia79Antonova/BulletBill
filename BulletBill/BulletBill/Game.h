@@ -66,6 +66,10 @@ private:
 	sf::Vector2f m_mouseEnd;
 	sf::Vector2f m_canonEnd{ 100.0f, 550.0f };
 
+	sf::CircleShape m_ball; //canon ball
+	sf::Vector2f m_ballLocation; // ball position
+	sf::Vector2f m_ballVelocity; // ball movement vector
+
 	sf::VertexArray m_aimLine{ sf::Lines }; //line to show path
 	bool m_aiming{ false }; // are we aiming
 
