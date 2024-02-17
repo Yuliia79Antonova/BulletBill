@@ -39,6 +39,7 @@ private:
 	void moveBall();
 	bool checkGround(sf::Vector2f t_location);
 	bool checkCollision(sf::CircleShape& t_ball, sf::RectangleShape& t_block, bool t_target);
+	void adjustGravity(float t_adjustment);
 
 
 	sf::RenderWindow m_window; // main SFML window
@@ -73,6 +74,10 @@ private:
 	sf::RectangleShape m_canon;
 	sf::Vector2f m_mouseEnd;
 	sf::Vector2f m_canonEnd{ 100.0f, 550.0f };
+
+	sf::RectangleShape m_gravityBar; // gravity indicators
+	sf::Texture m_arrowTexture;
+	sf::Sprite m_arrowSprite; 
 
 	sf::CircleShape m_ball; //canon ball
 	sf::Vector2f m_ballLocation; // ball position
