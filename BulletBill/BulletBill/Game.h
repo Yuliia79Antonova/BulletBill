@@ -75,6 +75,11 @@ private:
 	sf::Vector2f m_mouseEnd;
 	sf::Vector2f m_canonEnd{ 100.0f, 550.0f };
 
+	sf::Texture m_baseTexture;
+	sf::Sprite m_baseSprite;
+	sf::Texture m_barrellTexture;
+	sf::Sprite m_barrellSprite;
+
 	sf::RectangleShape m_gravityBar; // gravity indicators
 	sf::Texture m_arrowTexture;
 	sf::Sprite m_arrowSprite; 

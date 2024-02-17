@@ -156,6 +156,8 @@ void Game::render()
 		m_window.draw(m_wallSprite);
 		m_window.draw(m_gumbaSprite);
 		m_window.draw(m_arrowSprite);
+		m_window.draw(m_barrellSprite);
+		m_window.draw(m_baseSprite);
 	}
 	else
 	{
@@ -245,10 +247,10 @@ void Game::setupSprite()
 	m_wallSprite.setTextureRect(sf::IntRect(0, 0, 32, 100));
 	m_wallSprite.setPosition(m_wall.getPosition());
 
-	
+
 
 	m_target.setFillColor(sf::Color::Green);
-	m_target.setSize(sf::Vector2f{55.0f, 55.0f});
+	m_target.setSize(sf::Vector2f{ 55.0f, 55.0f });
 	m_targetLocation = sf::Vector2f{ 420.0f,545.0f };
 	m_target.setPosition(m_targetLocation);
 
@@ -280,6 +282,23 @@ void Game::setupSprite()
 	}
 	m_arrowSprite.setTexture(m_arrowTexture);
 	m_arrowSprite.setPosition(m_gravityBar.getPosition());
+
+	if (!m_baseTexture.loadFromFile("ASSETS\\IMAGES\\base.png"))
+	{
+		std::cout << "problem with base" << std::endl;
+	}
+	m_baseSprite.setTexture(m_baseTexture);
+	m_baseSprite.setPosition(70.0f, 531.0f);
+
+	if (!m_barrellTexture.loadFromFile("ASSETS\\IMAGES\\barrel.png"))
+	{
+		std::cout << "Problem with barrel" << std::endl;
+	}
+	m_barrellSprite.setTexture(m_barrellTexture);
+	m_barrellSprite.setOrigin(22.0f, 45.0f);
+	m_barrellSprite.setRotation(45.0f);
+	m_barrellSprite.setPosition(100.0f, 550.0f);
+
 }
 
 void Game::moveTarget()
@@ -354,6 +373,7 @@ void Game::setAimLine()
 	angelR = std::atan2f(line.y, line.x);
 	angelD = angelR * 180.0f / 3.14f;
 	m_canon.setRotation(angelD +90.0f);
+	m_barrellSprite.setRotation(angelD + 90.0f);
 
 	sf::Vertex point;
 	point.color = sf::Color::Black;
