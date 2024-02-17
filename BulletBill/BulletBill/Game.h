@@ -38,6 +38,7 @@ private:
 	void setAimLine();
 	void moveBall();
 	bool checkGround(sf::Vector2f t_location);
+	bool checkCollision(sf::CircleShape& t_ball, sf::RectangleShape& t_block, bool t_target);
 
 
 	sf::RenderWindow m_window; // main SFML window
@@ -49,6 +50,7 @@ private:
 
 	sf::Text m_missMessage;
 	int m_misses{ 0 }; // count missed shots
+	int m_hits{ 0 };
 	sf::Text m_hitMessage;
 
 	bool m_graphics{ false }; //draw fancy pictures [or not]

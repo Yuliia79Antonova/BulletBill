@@ -123,6 +123,14 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		moveBall();
 		m_firing = checkGround(m_ballLocation);
+		if (m_firing)
+		{
+			m_firing = checkCollision(m_ball, m_target, true);
+		}
+		if (m_firing)
+		{
+			m_firing = checkCollision(m_ball, m_wall, false);
+		}
 	}
 	moveTarget();
 	animateTarget();
@@ -153,6 +161,7 @@ void Game::render()
 		
 	}
 		m_window.draw(m_missMessage);
+		m_window.draw(m_hitMessage);
 		m_window.display();
 }
 
@@ -173,11 +182,18 @@ void Game::setupFontAndText()
 	m_welcomeMessage.setOutlineColor(sf::Color::Red);
 	m_welcomeMessage.setFillColor(sf::Color::Black);
 	m_welcomeMessage.setOutlineThickness(3.0f);
+
 	m_missMessage.setCharacterSize(20U);
 	m_missMessage.setPosition(40.0f, 110.0f);
 	m_missMessage.setFillColor(sf::Color::Blue);
 	m_missMessage.setFont(m_ArialBlackfont);
 	m_missMessage.setString("Misses:");
+
+	m_hitMessage.setCharacterSize(20U);
+	m_hitMessage.setPosition(40.0f, 50.0f);
+	m_hitMessage.setFillColor(sf::Color::Blue);
+	m_hitMessage.setFont(m_ArialBlackfont);
+	m_hitMessage.setString("Hits:");
 
 }
 
@@ -371,6 +387,31 @@ bool Game::checkGround(sf::Vector2f t_location)
 		return false;
 	}
 	return true;
+}
+
+bool Game::checkCollision(sf::CircleShape& t_ball, sf::RectangleShape& t_block, bool t_target)
+{
+	bool result = true;
+	sf::FloatRect circle = t_ball.getGlobalBounds();
+	sf::FloatRect block = t_block.getGlobalBounds();
+	if (circle.intersects(block))
+	{
+		result = false;
+		m_ballLocation = sf::Vector2f{ 100.0f, 550.0f };
+		m_ball.setPosition(m_ballLocation);
+		if (t_target)
+		{
+			m_hits++;
+			m_hitMessage.setString("Hits:" + std::to_string(m_hits));
+		}
+		else
+		{
+			m_misses++;
+			m_missMessage.setString("Misses:" + std::to_string(m_misses));
+		}
+	}
+
+	return result;
 }
 
 	
