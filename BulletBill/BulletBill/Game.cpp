@@ -295,7 +295,7 @@ void Game::setAimLine()
 	float angelR; //radians
 	sf::Vector2f line;
 
-	line = m_mouseEnd - m_canonEnd;
+	line = m_mouseEnd = m_canonEnd;
 	angelR = std::atan2f(line.y, line.x);
 	angelD = angelR * 180.0f / 3.14f;
 	m_canon.setRotation(angelD +90.0f);
