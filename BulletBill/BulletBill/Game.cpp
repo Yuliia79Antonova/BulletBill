@@ -107,11 +107,11 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_graphics = !m_graphics;
 	}
-	if (sf::Keyboard::Add == t_event.key.code)
+	if (sf::Keyboard::W == t_event.key.code)
 	{
 		adjustGravity(0.005f);
 	}
-	if (sf::Keyboard::Subtract == t_event.key.code)
+	if (sf::Keyboard::E == t_event.key.code)
 	{
 		adjustGravity(-0.005f);
 	}
@@ -439,6 +439,14 @@ void Game::adjustGravity(float t_adjustment)
 {
 	float magnitude;
 	m_gravity.y += t_adjustment;
+	m_gravityBar.setFillColor(sf::Color::Blue);
+	m_arrowSprite.setColor(sf::Color::White);
+	if (m_gravity.y < 0.0f)
+	{
+		m_gravityBar.setFillColor(sf::Color::Red);
+		m_arrowSprite.setColor(sf::Color::Blue);
+		m_gravity.y = 0.0f;
+	}
 	magnitude = m_gravity.y * 500.0f + 35.0f;
 	m_gravityBar.setSize(sf::Vector2f{ 20.0f, magnitude });
 	m_arrowSprite.setScale(1.0f, magnitude/ 60.0f);
