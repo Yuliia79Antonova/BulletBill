@@ -77,6 +77,10 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (sf::Event::MouseButtonPressed == newEvent.type)
+		{
+			processMouseDown(newEvent);
+		}
 	}
 }
 
@@ -121,12 +125,18 @@ void Game::render()
 	{
 		m_window.draw(m_backgroundSprite);
 		m_window.draw(m_wallSprite);
+		m_window.draw(m_gumbaSprite);
 	}
 	else
 	{
+		m_window.draw(m_canon);
 		m_window.draw(m_wall);
+		if (m_aiming)
+		{
+			m_window.draw(m_aimLine);
+		}
 		m_window.draw(m_target);
-		m_window.draw(m_gumbaSprite);
+		
 	}
 		
 		m_window.display();
@@ -157,6 +167,11 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
+	m_canon.setFillColor(sf::Color::Black);
+	m_canon.setSize(sf::Vector2f{ 20.0f, 70.0f });
+	m_canon.setPosition(100.0f, 550.0f);
+	m_canon.setOrigin(0.0f, 35.0f);
+	m_canon.setRotation(45.0f);
 	if (m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
 	{
 		std::cout << "problem loading background image" << std::endl;
@@ -253,6 +268,28 @@ void Game::animateTarget()
 		m_gumbaFrame = frame;
 		m_gumbaSprite.setTextureRect(sf::IntRect{ column * FRAME_WIDTH, FRAME_HEIGHT * row, FRAME_WIDTH, FRAME_HEIGHT });
 	}
+}
+
+void Game::processMouseDown(sf::Event t_event)
+{
+	if (!m_aiming)
+	{
+		m_mouseEnd.x = static_cast<float>(t_event.mouseButton.x);
+		m_mouseEnd.y = static_cast<float>(t_event.mouseButton.y);
+		m_aiming = true;
+		setAimLine();
+	}
+}
+
+void Game::setAimLine()
+{
+	sf::Vertex point;
+	point.color = sf::Color::Black;
+	m_aimLine.clear();
+	point.position = m_mouseEnd;
+	m_aimLine.append(point);
+	point.position = m_canonEnd;
+	m_aimLine.append(point);
 }
 
 
