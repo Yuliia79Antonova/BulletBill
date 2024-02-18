@@ -154,11 +154,16 @@ void Game::render()
 	{
 		m_window.draw(m_backgroundSprite);
 		m_window.draw(m_wallSprite);
-		m_window.draw(m_gumbaSprite);
+		
 		m_window.draw(m_arrowSprite);
 		m_window.draw(m_bulletSprite);
 		m_window.draw(m_barrellSprite);
 		m_window.draw(m_baseSprite);
+		if (m_aiming)
+		{
+			drawAimLine();
+		}
+		m_window.draw(m_gumbaSprite);
 	}
 	else
 	{
@@ -392,6 +397,30 @@ void Game::setAimLine()
 	m_aimLine.append(point);
 	point.position = m_canonEnd;
 	m_aimLine.append(point);
+}
+
+void Game::drawAimLine()
+{
+	sf::Vector2f velocity = (m_mouseEnd - m_canonEnd) / 50.0f;
+	sf::Vector2f location = m_ballLocation;
+	float angel;
+	sf::Color color{ 255u,255u,255u,255u };
+	for (int i = 0; i < 255; i++)
+	{
+		velocity += m_gravity;
+		location += velocity;
+		if (i % 20 == 0)
+		{
+			angel = std::atan2(velocity.y, velocity.x);
+			angel = angel * 180.0f / 3.14f;
+			m_bulletSprite.setRotation(angel + 90.0f);
+			m_bulletSprite.setPosition(location);
+			color.a = 255 - i;
+			m_bulletSprite.setColor(color);
+			m_window.draw(m_bulletSprite);
+		}
+	}
+	m_bulletSprite.setColor(sf::Color::White);
 }
 
 void Game::processMouseMove(sf::Event t_event)
