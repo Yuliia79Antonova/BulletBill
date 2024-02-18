@@ -79,6 +79,8 @@ private:
 	sf::Sprite m_baseSprite;
 	sf::Texture m_barrellTexture;
 	sf::Sprite m_barrellSprite;
+	sf::Texture m_bulletTexture;
+	sf::Sprite m_bulletSprite;
 
 	sf::RectangleShape m_gravityBar; // gravity indicators
 	sf::Texture m_arrowTexture;
