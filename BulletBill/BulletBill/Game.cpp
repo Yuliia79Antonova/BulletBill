@@ -220,79 +220,35 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
+	setupCannon();
+	setupGravity();
+	setupTarget();
+}
+
+void Game::setupCannon()
+{
 	m_ball.setFillColor(sf::Color::Red);
 	m_ball.setRadius(10.0f);
 	m_ball.setOrigin(10.0f, 10.0f);
 	m_ballLocation = sf::Vector2f{ 100.0f, 550.0f };
 	m_ball.setPosition(100.0f, 550.0f);
 
-
 	m_canon.setFillColor(sf::Color::Black);
 	m_canon.setSize(sf::Vector2f{ 20.0f, 70.0f });
 	m_canon.setPosition(100.0f, 550.0f);
 	m_canon.setOrigin(10.0f, 35.0f);
 	m_canon.setRotation(45.0f);
-	if (m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
+
+	if (!m_backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
 	{
-		std::cout << "problem loading background image" << std::endl;
+		std::cout << "problem with background" << std::endl;
 	}
-
-	m_wall.setFillColor(sf::Color::Black);
-	m_wall.setSize(sf::Vector2f{ 32.0f, 100.0f });
-	m_wall.setPosition(400.0f, 500.0f);
-
-	m_backgroundSprite.setTexture(m_backgroundTexture);
-	m_backgroundSprite.setPosition(0.0f, 0.0f);
-
-	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wall.jpg"))
-	{
-		std::cout << "problem loading wall image" << std::endl;
-	}
-	m_wallTexture.setRepeated(true);
-	m_wallSprite.setTexture(m_wallTexture);
-	m_wallSprite.setTextureRect(sf::IntRect(0, 0, 32, 100));
-	m_wallSprite.setPosition(m_wall.getPosition());
-
-
-
-	m_target.setFillColor(sf::Color::Green);
-	m_target.setSize(sf::Vector2f{ 55.0f, 55.0f });
-	m_targetLocation = sf::Vector2f{ 420.0f,545.0f };
-	m_target.setPosition(m_targetLocation);
-
-	if (!m_gumballTexture.loadFromFile("ASSETS\\IMAGES\\gumba2.png"))
-	{
-		std::cout << "problem loading gumba texture" << std::endl;
-	}
-	m_gumbaSprite.setTexture(m_gumballTexture);
-	m_gumbaSprite.setPosition(m_targetLocation);
-	m_gumbaSprite.setTextureRect(sf::IntRect{ 0, 0, 52, 54 });
-	m_gumbaSprite.setScale(-1.0f, 1.0f);
-	m_gumbaSprite.setOrigin(52.0f, 0.0f);
-
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
-	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
-	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
-
-	m_gravityBar.setFillColor(sf::Color::Blue);
-	m_gravityBar.setSize(sf::Vector2f{ 20.0f, 60.0f });
-	m_gravityBar.setPosition(760.0f, 40.0f);
-
-	if (!m_arrowTexture.loadFromFile("ASSETS\\IMAGES\\arrow.png"))
-	{
-		std::cout << "problem with arrow" << std::endl;
-	}
-	m_arrowSprite.setTexture(m_arrowTexture);
-	m_arrowSprite.setPosition(m_gravityBar.getPosition());
 
 	if (!m_baseTexture.loadFromFile("ASSETS\\IMAGES\\base.png"))
 	{
 		std::cout << "problem with base" << std::endl;
 	}
+
 	m_baseSprite.setTexture(m_baseTexture);
 	m_baseSprite.setPosition(70.0f, 531.0f);
 
@@ -312,8 +268,58 @@ void Game::setupSprite()
 	m_bulletSprite.setTexture(m_bulletTexture);
 	m_bulletSprite.setOrigin(20.0f, 20.0f);
 	m_bulletSprite.setRotation(45.0f);
-	m_bulletSprite.setPosition(100.0f, 550.0f); 
+	m_bulletSprite.setPosition(100.0f, 550.0f);
+}
 
+void Game::setupTarget()
+{
+	if (!m_wallTexture.loadFromFile("ASSETS\\IMAGES\\wall.jpg"))
+	{
+		std::cout << "problem loading wall image" << std::endl;
+	}
+	m_wallSprite.setTexture(m_wallTexture);
+	m_wallSprite.setPosition(400.0f, 500.0f);
+	m_wallTexture.setRepeated(true);	
+	m_wallSprite.setTextureRect(sf::IntRect(0, 0, 32, 100));
+	
+
+	m_wall.setFillColor(sf::Color::Black);
+	m_wall.setSize(sf::Vector2f{ 32.0f, 100.0f });
+	m_wall.setPosition(400.0f, 500.0f);
+
+	m_backgroundSprite.setTexture(m_backgroundTexture);
+	m_backgroundSprite.setPosition(0.0f, 0.0f);
+
+	
+
+	m_target.setFillColor(sf::Color::Green);
+	m_target.setSize(sf::Vector2f{ 55.0f, 55.0f });
+	m_targetLocation = sf::Vector2f{ 420.0f,545.0f };
+	m_target.setPosition(m_targetLocation);
+
+	if (!m_gumballTexture.loadFromFile("ASSETS\\IMAGES\\gumba2.png"))
+	{
+		std::cout << "problem loading gumba texture" << std::endl;
+	}
+	m_gumbaSprite.setTexture(m_gumballTexture);
+	m_gumbaSprite.setPosition(m_targetLocation);
+	m_gumbaSprite.setTextureRect(sf::IntRect{ 0, 0, 52, 54 });
+	m_gumbaSprite.setScale(-1.0f, 1.0f);
+	m_gumbaSprite.setOrigin(52.0f, 0.0f);
+}
+
+void Game::setupGravity()
+{
+	m_gravityBar.setFillColor(sf::Color::Blue);
+	m_gravityBar.setSize(sf::Vector2f{ 20.0f, 60.0f });
+	m_gravityBar.setPosition(760.0f, 40.0f);
+
+	if (!m_arrowTexture.loadFromFile("ASSETS\\IMAGES\\arrow.png"))
+	{
+		std::cout << "problem with arrow" << std::endl;
+	}
+	m_arrowSprite.setTexture(m_arrowTexture);
+	m_arrowSprite.setPosition(m_gravityBar.getPosition());
 }
 
 void Game::moveTarget()
